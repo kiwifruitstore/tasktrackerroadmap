@@ -1,5 +1,6 @@
 #i have no idea how to do any of this but let's go i guess
 import json
+import sys
 
 print("hey hi welcome")
 
@@ -18,9 +19,9 @@ start_file = {
 }
 
 # if something something
-#with open("task_tracker.json", mode="w", , encoding="utf-8") as write_file:
-#    json.dump(start_file, write_file)
-# creates a new task tracker json file (hopefully!)
+#with open("to_do_list.json", mode="w", encoding="utf-8") as write_file:
+ #   json.dump(start_file, write_file)
+#creates a new task tracker json file (hopefully!)
 
 
 #with open("task_tracker.json", mode="r", encoding="utf-8") as read_file:
@@ -29,3 +30,26 @@ start_file = {
 # not sure how to handle the name of the file if it isn't already "task_tracker.json"...
 
 # break time
+
+# coming back to this now and we don't need to create shit
+# just have the file there
+# lol
+
+# also using sys for command line argument
+
+
+"""
+all interactive code goes in the loop
+this will read user input
+typing "exit" will exit the program 
+"""
+for line in sys.stdin:
+    if "exit" == line.rstrip():
+        break
+    if "add" == line.split(" ")[0]:
+        print(f"adding: {line.split(" ")[1]}")
+    #print(f"Input : {line}")
+    #print(line.split(" "))
+print("see you!")
+
+# works
