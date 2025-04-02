@@ -38,18 +38,47 @@ start_file = {
 # also using sys for command line argument
 
 
+# COMMAND LINE ARGUMENTS FOR SINGLE USES
+print("Arguments passed:", str(sys.argv))
+program_start = True
+try:
+    if sys.argv[1] != "start":
+        program_start = False
+    try:
+        print(sys.argv[1])
+        if sys.argv[1] == "add":
+            print(f"adding: {sys.argv[2]}")
+    except IndexError:
+        print("index error!")
+except IndexError:
+    program_start = True
+print(program_start)
+
+# if you run the program with the start command or no commands at all, it starts the program
+# otherwise program start is false and does not run iterative loop
+# this is for single use cases of the program, if you just wanna change one thing then get back to work (and not have to write "exit" all the time)
+# now we add functions for all of our commands, and just run them once for single uses and again in the loop
+# one test case function "add" right now
+# at this rate i'll have to make a try except package for every single command :sob:
+
+
+# LOOP FOR STARTING AND STOPPING
 """
 all interactive code goes in the loop
 this will read user input
 typing "exit" will exit the program 
 """
-for line in sys.stdin:
-    if "exit" == line.rstrip():
-        break
-    if "add" == line.split(" ")[0]:
-        print(f"adding: {line.split(" ")[1]}")
-    #print(f"Input : {line}")
+if program_start == True:
+    for line in sys.stdin:
+        if "exit" == line.rstrip():
+            break
+        #if "add" == line.split(" ")[0]:
+        #    print(f"adding: {line.split(" ")[1]}")
+        print(f"Input : {line}")
     #print(line.split(" "))
+
 print("see you!")
+
+
 
 # works
