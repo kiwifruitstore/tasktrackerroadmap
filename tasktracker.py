@@ -37,6 +37,26 @@ start_file = {
 
 # also using sys for command line argument
 
+# FUNCTIONS HERE
+
+def add_task(new_task, filename="to_do_list.json"):
+    with open(filename, "r+") as file:
+        file_data = json.load(file)
+        file_data["tasks"].append(new_task)
+        file.seek(0)
+        json.dump(file_data, file, indent = 4)
+
+
+
+
+
+
+
+
+
+
+
+
 
 # COMMAND LINE ARGUMENTS FOR SINGLE USES
 print("Arguments passed:", str(sys.argv))
@@ -90,7 +110,23 @@ if program_start == True:
     #print(line.split(" "))
 
 print("see you!")
-
-
-
 # works
+
+
+# now to fuck w json
+# first rung: add, edit, delete tasks
+# add command: input like [tasktracker.py add "task"]
+# task properties: id (assigned automatically), description (string passed when adding), status, createdAt, updatedAt
+
+
+# a task should look like this ideally:
+"""
+{
+    "id": "[NUMBER]",
+    "description": "[DESCRIPTION]",
+    "status": ["todo", "in-progress", or "done"],
+    "createdAt": "[date and time task was created]",
+    "updatedAt": "[last updated date and time]",
+}
+"""
+
