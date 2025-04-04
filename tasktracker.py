@@ -54,6 +54,18 @@ except IndexError:
     program_start = True
 print(program_start)
 
+# block for adding commands (command block haha get it it's like minecraft the command block from minecraft)
+# also avoid setting variables to generalize cli commands (index errors are fucked and cba with flowcharts atm)
+"""
+try:
+        print(sys.argv[1])
+        if sys.argv[1] == "[COMMAND NAME]":
+            do thing!
+    except IndexError:
+        print("index error!")
+"""
+
+
 # if you run the program with the start command or no commands at all, it starts the program
 # otherwise program start is false and does not run iterative loop
 # this is for single use cases of the program, if you just wanna change one thing then get back to work (and not have to write "exit" all the time)
@@ -72,8 +84,8 @@ if program_start == True:
     for line in sys.stdin:
         if "exit" == line.rstrip():
             break
-        #if "add" == line.split(" ")[0]:
-        #    print(f"adding: {line.split(" ")[1]}")
+        if "add" == line.split(" ")[0]:
+            print(f"adding: {line.split(" ")[1]}")
         print(f"Input : {line}")
     #print(line.split(" "))
 
