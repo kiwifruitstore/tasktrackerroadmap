@@ -46,16 +46,12 @@ def add_task(new_task, filename="to_do_list.json"):
         file.seek(0)
         json.dump(file_data, file, indent = 4)
 
-
-
-
-
-
-
-
-
-
-
+def task_creator(task_description):
+    task_description = task_description
+    task_description = task_description.rstrip().strip("\"")
+    return {
+        "description" : "%s" % task_description
+    } 
 
 
 # COMMAND LINE ARGUMENTS FOR SINGLE USES
@@ -67,9 +63,13 @@ try:
     try:
         print(sys.argv[1])
         if sys.argv[1] == "add":
-            print(f"adding: {sys.argv[2]}")
+            list_of_commands = list(sys.argv)
+            description_output_from_cli = list_of_commands[2:]
+            string_description_output_from_cli = " ".join(description_output_from_cli)
+            print(f"adding: {task_creator(string_description_output_from_cli)}")
+            #add_task(task_creator(string_description_output_from_cli))
     except IndexError:
-        print("index error!")
+        print("index error! pass your description in after the [add] command")
 except IndexError:
     program_start = True
 print(program_start)
@@ -105,7 +105,9 @@ if program_start == True:
         if "exit" == line.rstrip():
             break
         if "add" == line.split(" ")[0]:
-            print(f"adding: {line.split(" ")[1]}")
+            description_output = " ".join(line.split(" ")[1:])
+            print(f"adding: {description_output}")
+            #add_task(task_creator(description_output))
         print(f"Input : {line}")
     #print(line.split(" "))
 
