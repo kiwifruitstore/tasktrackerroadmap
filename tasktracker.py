@@ -53,7 +53,7 @@ def task_creator(task_description):
         "description" : "%s" % task_description
     } 
 
-
+# arguments so far: "start", "add"
 # COMMAND LINE ARGUMENTS FOR SINGLE USES
 print("Arguments passed:", str(sys.argv))
 program_start = True
