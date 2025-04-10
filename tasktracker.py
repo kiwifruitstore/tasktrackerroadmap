@@ -46,10 +46,22 @@ def add_task(new_task, filename="to_do_list.json"):
         file.seek(0)
         json.dump(file_data, file, indent = 4)
 
+def id_assigner():
+    f = open("to_do_list.json",)
+    json_file_dict = json.load(f)
+    id_numbers = [d["id"] for d in json_file_dict["tasks"]]
+    f.close
+    if 1 not in id_numbers:
+        return 1
+    for i in id_numbers:
+        if i + 1 not in id_numbers:
+            return i + 1
+        
 def task_creator(task_description):
     task_description = task_description
     task_description = task_description.rstrip().strip("\"")
     return {
+        "id" : id_assigner(),
         "description" : "%s" % task_description
     } 
 
@@ -66,8 +78,8 @@ try:
             list_of_commands = list(sys.argv)
             description_output_from_cli = list_of_commands[2:]
             string_description_output_from_cli = " ".join(description_output_from_cli)
-            print(f"adding: {task_creator(string_description_output_from_cli)}")
-            #add_task(task_creator(string_description_output_from_cli))
+            print(f"adding: {task_creator(string_description_output_from_cli)} (at id {id_assigner()})")
+            add_task(task_creator(string_description_output_from_cli))
     except IndexError:
         print("index error! pass your description in after the [add] command")
 except IndexError:
@@ -106,8 +118,8 @@ if program_start == True:
             break
         if "add" == line.split(" ")[0]:
             description_output = " ".join(line.split(" ")[1:])
-            print(f"adding: {description_output}")
-            #add_task(task_creator(description_output))
+            print(f"adding: {description_output} (at id {id_assigner()})")
+            add_task(task_creator(description_output))
         print(f"Input : {line}")
     #print(line.split(" "))
 
@@ -131,4 +143,10 @@ print("see you!")
     "updatedAt": "[last updated date and time]",
 }
 """
+# at a point where i have to do the automatic id assigning thing
+# thought about this for a couple of days and i've decided i don't need to make the id numbers changeable because completed tasks will still stay in the database
+# so ! just gonna write a function that reads the ids given out so far and spits out the next one
+# hopefully it should output 3 after reading 1 2 4 5
+# because deleting tasks will be a feature too!
 
+# thank fuck it works
