@@ -65,15 +65,34 @@ def task_creator(task_description):
         "description" : "%s" % task_description
     } 
 
+def delete_task(id_of_task):
+    found_task = False
+    f = open("to_do_list.json",)
+    json_file_dict = json.load(f)
+    #id_numbers = [d["id"] for d in json_file_dict["tasks"]]
+    #print(range(len(json_file_dict["tasks"])))
+    for idx, object in enumerate(json_file_dict["tasks"]):
+        if object["id"] == int(id_of_task):
+            found_task = True
+            print("deleting task at id " + str(id_of_task))
+            json_file_dict["tasks"].pop(idx)
+            with open("to_do_list.json", "w") as f:
+                json.dump(json_file_dict, f, indent=2)
+            break
+    if found_task == False:
+        print("task id not found")
+
+
 # arguments so far: "start", "add"
 # COMMAND LINE ARGUMENTS FOR SINGLE USES
-print("Arguments passed:", str(sys.argv))
+#print("Arguments passed:", str(sys.argv))
 program_start = True
 try:
     if sys.argv[1] != "start":
         program_start = False
+
     try:
-        print(sys.argv[1])
+        #print(sys.argv[1])
         if sys.argv[1] == "add":
             list_of_commands = list(sys.argv)
             description_output_from_cli = list_of_commands[2:]
@@ -82,9 +101,17 @@ try:
             add_task(task_creator(string_description_output_from_cli))
     except IndexError:
         print("index error! pass your description in after the [add] command")
+    
+    try:
+        #print(sys.argv[1])
+        if sys.argv[1] == "delete":
+            delete_task(sys.argv[2])
+    except IndexError:
+        print("index error! please set input in the following form: delete (id number of task you wish to delete)")
+
 except IndexError:
     program_start = True
-print(program_start)
+#print(program_start)
 
 # block for adding commands (command block haha get it it's like minecraft the command block from minecraft)
 # also avoid setting variables to generalize cli commands (index errors are fucked and cba with flowcharts atm)
@@ -120,6 +147,8 @@ if program_start == True:
             description_output = " ".join(line.split(" ")[1:])
             print(f"adding: {description_output} (at id {id_assigner()})")
             add_task(task_creator(description_output))
+        if "delete" == line.split(" ")[0]:
+            delete_task(line.split(" ")[1])
         print(f"Input : {line}")
     #print(line.split(" "))
 
@@ -150,3 +179,5 @@ print("see you!")
 # because deleting tasks will be a feature too!
 
 # thank fuck it works
+
+# add and delete commands added and working, feel fucking good man
