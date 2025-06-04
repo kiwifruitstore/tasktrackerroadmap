@@ -82,6 +82,23 @@ def delete_task(id_of_task):
     if found_task == False:
         print("task id not found")
 
+def update_task(id_of_task, new_description):
+    found_task = False
+    f = open("to_do_list.json",)
+    json_file_dict = json.load(f)
+    #id_numbers = [d["id"] for d in json_file_dict["tasks"]]
+    #print(range(len(json_file_dict["tasks"])))
+    for idx, object in enumerate(json_file_dict["tasks"]):
+        if object["id"] == int(id_of_task):
+            found_task = True
+            print("updating task at id " + str(id_of_task))
+            object.update({"description": new_description})
+            with open("to_do_list.json", "w") as f:
+                json.dump(json_file_dict, f, indent=2)
+            break
+    if found_task == False:
+        print("task id not found")
+
 
 # arguments so far: "start", "add"
 # COMMAND LINE ARGUMENTS FOR SINGLE USES
@@ -106,6 +123,16 @@ try:
         #print(sys.argv[1])
         if sys.argv[1] == "delete":
             delete_task(sys.argv[2])
+    except IndexError:
+        print("index error! please set input in the following form: delete (id number of task you wish to delete)")
+
+    try:
+        #print(sys.argv[1])
+        if sys.argv[1] == "update":
+            list_of_commands = list(sys.argv)
+            update_description_output_from_cli = list_of_commands[3:]
+            update_string_description_output_from_cli = " ".join(update_description_output_from_cli).rstrip()
+            update_task(sys.argv[2], update_string_description_output_from_cli)
     except IndexError:
         print("index error! please set input in the following form: delete (id number of task you wish to delete)")
 
@@ -149,6 +176,9 @@ if program_start == True:
             add_task(task_creator(description_output))
         if "delete" == line.split(" ")[0]:
             delete_task(line.split(" ")[1])
+        if "update" == line.split(" ")[0]:
+            update_description_input = " ".join(line.split(" ")[2:]).rstrip()
+            update_task(line.split(" ")[1], update_description_input)
         print(f"Input : {line}")
     #print(line.split(" "))
 
