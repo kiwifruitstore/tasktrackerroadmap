@@ -62,7 +62,8 @@ def task_creator(task_description):
     task_description = task_description.rstrip().strip("\"")
     return {
         "id" : id_assigner(),
-        "description" : "%s" % task_description
+        "description" : "%s" % task_description,
+        "status" : "todo"
     } 
 
 def delete_task(id_of_task):
@@ -91,13 +92,48 @@ def update_task(id_of_task, new_description):
     for idx, object in enumerate(json_file_dict["tasks"]):
         if object["id"] == int(id_of_task):
             found_task = True
-            print("updating task at id " + str(id_of_task))
+            print("updating task at id " + str(id_of_task) + " with description: " + str(new_description))
             object.update({"description": new_description})
             with open("to_do_list.json", "w") as f:
                 json.dump(json_file_dict, f, indent=2)
             break
     if found_task == False:
         print("task id not found")
+
+def mark_in_progress(id_of_task):
+    found_task = False
+    f = open("to_do_list.json",)
+    json_file_dict = json.load(f)
+    #id_numbers = [d["id"] for d in json_file_dict["tasks"]]
+    #print(range(len(json_file_dict["tasks"])))
+    for idx, object in enumerate(json_file_dict["tasks"]):
+        if object["id"] == int(id_of_task):
+            found_task = True
+            print("changing task status to 'in progress' at id " + str(id_of_task))
+            object.update({"status": "in-progress"})
+            with open("to_do_list.json", "w") as f:
+                json.dump(json_file_dict, f, indent=2)
+            break
+    if found_task == False:
+        print("task id not found")
+
+def mark_done(id_of_task):
+    found_task = False
+    f = open("to_do_list.json",)
+    json_file_dict = json.load(f)
+    #id_numbers = [d["id"] for d in json_file_dict["tasks"]]
+    #print(range(len(json_file_dict["tasks"])))
+    for idx, object in enumerate(json_file_dict["tasks"]):
+        if object["id"] == int(id_of_task):
+            found_task = True
+            print("changing task status to 'done' at id " + str(id_of_task))
+            object.update({"status": "done"})
+            with open("to_do_list.json", "w") as f:
+                json.dump(json_file_dict, f, indent=2)
+            break
+    if found_task == False:
+        print("task id not found")
+
 
 
 # arguments so far: "start", "add"
@@ -134,7 +170,21 @@ try:
             update_string_description_output_from_cli = " ".join(update_description_output_from_cli).rstrip()
             update_task(sys.argv[2], update_string_description_output_from_cli)
     except IndexError:
-        print("index error! please set input in the following form: delete (id number of task you wish to delete)")
+        print("index error! please set input in the following form: update (id number of task you wish to delete) (new description)")
+
+    try:
+        #print(sys.argv[1])
+        if sys.argv[1] == "markinprogress":
+            mark_in_progress(sys.argv[2])
+    except IndexError:
+        print("index error! please set input in the following form: markinprogress (id number of task you wish to delete)")
+    
+    try:
+        #print(sys.argv[1])
+        if sys.argv[1] == "markdone":
+            mark_done(sys.argv[2])
+    except IndexError:
+        print("index error! please set input in the following form: markdone (id number of task you wish to delete)")
 
 except IndexError:
     program_start = True
@@ -179,6 +229,11 @@ if program_start == True:
         if "update" == line.split(" ")[0]:
             update_description_input = " ".join(line.split(" ")[2:]).rstrip()
             update_task(line.split(" ")[1], update_description_input)
+        if "markinprogress" == line.split(" ")[0]:
+            mark_in_progress(line.split(" ")[1])
+        if "markdone" == line.split(" ")[0]:
+            mark_done(line.split(" ")[1])
+
         print(f"Input : {line}")
     #print(line.split(" "))
 
@@ -211,3 +266,5 @@ print("see you!")
 # thank fuck it works
 
 # add and delete commands added and working, feel fucking good man
+
+# update command added and working, feels good to derust :)
