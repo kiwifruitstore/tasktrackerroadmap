@@ -59,6 +59,7 @@ def id_assigner():
         
 def task_creator(task_description):
     task_description = task_description
+    #lol
     task_description = task_description.rstrip().strip("\"")
     return {
         "id" : id_assigner(),
@@ -134,6 +135,24 @@ def mark_done(id_of_task):
     if found_task == False:
         print("task id not found")
 
+def list_tasks(status):
+    f = open("to_do_list.json",)
+    json_file_dict = json.load(f)
+    #python dictionary now
+    # pretty_json_output = json.dumps(json_file_dict, indent=4)
+    print("listing tasks...")
+    #print(pretty_json_output)
+    if not json_file_dict["tasks"]:
+        print("no tasks yet!")
+    else:
+        for task in json_file_dict["tasks"]:
+            print("task number", task["id"])
+            for key, value in task.items():
+                print(f"{key}: {value}")
+            print("\n")
+    with open("to_do_list.json", "w") as f:
+        json.dump(json_file_dict, f, indent=2)
+
 
 
 # arguments so far: "start", "add"
@@ -185,6 +204,13 @@ try:
             mark_done(sys.argv[2])
     except IndexError:
         print("index error! please set input in the following form: markdone (id number of task you wish to delete)")
+    
+    try:
+        #print(sys.argv[1])
+        if sys.argv[1] == "list":
+            list_tasks(sys.argv[2])
+    except IndexError:
+        print("index error! please set input in the following form: list (status of tasks you'd like to see, or 'all' if you'd like to see every task on the list)")
 
 except IndexError:
     program_start = True
@@ -233,7 +259,8 @@ if program_start == True:
             mark_in_progress(line.split(" ")[1])
         if "markdone" == line.split(" ")[0]:
             mark_done(line.split(" ")[1])
-
+        if "list" == line.split(" ")[0]:
+            list_tasks(line.split(" ")[1])
         print(f"Input : {line}")
     #print(line.split(" "))
 
@@ -268,3 +295,20 @@ print("see you!")
 # add and delete commands added and working, feel fucking good man
 
 # update command added and working, feels good to derust :)
+
+# status commands added! forgot to update lol
+
+# i've a couple hours before a party so i'll add this list function rq
+
+# how do i want all the tasks to look...
+
+"""
+task ID: X
+description: [description]
+status: ["todo", "in-progress", or "done"]
+created at: [date and time task was created]
+updated at: [last updated date and time]
+
+
+
+"""
