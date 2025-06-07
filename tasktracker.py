@@ -1,6 +1,7 @@
 #i have no idea how to do any of this but let's go i guess
 import json
 import sys
+import datetime
 
 print("hey hi welcome")
 
@@ -64,7 +65,9 @@ def task_creator(task_description):
     return {
         "id" : id_assigner(),
         "description" : "%s" % task_description,
-        "status" : "todo"
+        "status" : "todo",
+        "createdAt" : str(datetime.datetime.now()).split(".")[0],
+        "updatedAt" : str(datetime.datetime.now()).split(".")[0]
     } 
 
 def delete_task(id_of_task):
@@ -95,6 +98,7 @@ def update_task(id_of_task, new_description):
         if object["id"] == int(id_of_task):
             found_task = True
             print("updating task at id " + str(id_of_task) + " with description: " + str(new_description))
+            object.update({"updatedAt" : str(datetime.datetime.now()).split(".")[0]})
             object.update({"description": new_description})
             with open("to_do_list.json", "w") as f:
                 json.dump(json_file_dict, f, indent=2)
@@ -112,6 +116,7 @@ def mark_in_progress(id_of_task):
         if object["id"] == int(id_of_task):
             found_task = True
             print("changing task status to 'in progress' at id " + str(id_of_task))
+            object.update({"updatedAt" : str(datetime.datetime.now()).split(".")[0]})
             object.update({"status": "in-progress"})
             with open("to_do_list.json", "w") as f:
                 json.dump(json_file_dict, f, indent=2)
@@ -129,6 +134,7 @@ def mark_done(id_of_task):
         if object["id"] == int(id_of_task):
             found_task = True
             print("changing task status to 'done' at id " + str(id_of_task))
+            object.update({"updatedAt" : str(datetime.datetime.now()).split(".")[0]})
             object.update({"status": "done"})
             with open("to_do_list.json", "w") as f:
                 json.dump(json_file_dict, f, indent=2)
@@ -241,11 +247,10 @@ except IndexError:
 # also avoid setting variables to generalize cli commands (index errors are fucked and cba with flowcharts atm)
 """
 try:
-        print(sys.argv[1])
-        if sys.argv[1] == "[COMMAND NAME]":
-            do thing!
-    except IndexError:
-        print("index error!")
+    if sys.argv[1] == "[COMMAND NAME]":
+        do thing!
+except IndexError:
+    print("index error!")
 """
 
 
