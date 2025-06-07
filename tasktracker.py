@@ -3,6 +3,8 @@ import json
 import sys
 import datetime
 
+
+
 print("hey hi welcome")
 
 # okay so first off json files, how do they work
@@ -15,9 +17,6 @@ print("hey hi welcome")
 
 #print("first off, do you have an external json file you would like to load? use [some command - load (file)], otherwise create a new one with [some command - start]")
 
-start_file = {
-
-}
 
 # if something something
 #with open("to_do_list.json", mode="w", encoding="utf-8") as write_file:
@@ -35,6 +34,39 @@ start_file = {
 # coming back to this now and we don't need to create shit
 # just have the file there
 # lol
+
+
+# hello it's me from 2 ish months later 
+# apparently i need to create the json file if it doesn't exist
+# so before we load any of this postamble (real word?) we're gonna check if to_do_list.json exists first
+# and if it doesn't? we'll make one
+# this is what will be inside of our newly created file: 
+"""
+{
+  "tasks": []
+}
+"""
+# let's go let's go let's go
+
+start_file = {
+    "tasks": []
+}
+try:
+    with open('to_do_list.json', 'r') as fp:
+        testtasklist = json.load(fp)
+except IOError:
+    print("file not found unfortunately, creating new one...")
+    with open("to_do_list.json", mode="w", encoding="utf-8") as write_file:
+        json.dump(start_file, write_file, indent=4)
+    
+#create file manually if everything gets fucked
+"""
+with open("to_do_list.json", mode="w", encoding="utf-8") as write_file:
+    json.dump(start_file, write_file, indent=4)
+"""
+
+# LET'S FUCKING GOOOOOO IT WORKS
+
 
 # also using sys for command line argument
 
@@ -342,3 +374,6 @@ updated at: [last updated date and time]
 # DONE WITH EVERY COMMAND LET'S FUCKING GO
 # now to add createdAt and updatedAt attributes
 # and then i'm doneeeee
+
+
+# FINAL TOUCHES CHEF
