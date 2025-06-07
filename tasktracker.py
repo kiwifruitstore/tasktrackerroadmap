@@ -73,6 +73,7 @@ def delete_task(id_of_task):
     json_file_dict = json.load(f)
     #id_numbers = [d["id"] for d in json_file_dict["tasks"]]
     #print(range(len(json_file_dict["tasks"])))
+    # idx stands for index, this code finds the index of selected task in list
     for idx, object in enumerate(json_file_dict["tasks"]):
         if object["id"] == int(id_of_task):
             found_task = True
@@ -138,24 +139,44 @@ def mark_done(id_of_task):
 def list_tasks(status):
     f = open("to_do_list.json",)
     json_file_dict = json.load(f)
-    #python dictionary now
-    # pretty_json_output = json.dumps(json_file_dict, indent=4)
-    print("listing tasks...")
-    #print(pretty_json_output)
-    if not json_file_dict["tasks"]:
-        print("no tasks yet!")
+    #code to filter out tasks by status
+    output_list = []
+    status = status.rstrip()
+    if status == "all":
+        print("listing tasks...")
+        if not json_file_dict["tasks"]:
+            print("no tasks yet!")
+        else:
+            for task in json_file_dict["tasks"]:
+                print("task number", task["id"])
+                for key, value in task.items():
+                    print(f"{key}: {value}")
+                print("\n")
+    elif status == "done" or status == "todo" or status == "in-progress":
+        #code to filter out tasks by status
+        for idx, object in enumerate(json_file_dict["tasks"]):
+            if object["status"] == str(status):
+                output_list.append(json_file_dict["tasks"][idx])
+        #python dictionary now
+        print("listing tasks...")
+        #print(pretty_json_output)
+        if not output_list:
+            print("no tasks yet!")
+        else:
+            for task in output_list:
+                print("task number", task["id"])
+                for key, value in task.items():
+                    print(f"{key}: {value}")
+                print("\n")
     else:
-        for task in json_file_dict["tasks"]:
-            print("task number", task["id"])
-            for key, value in task.items():
-                print(f"{key}: {value}")
-            print("\n")
+        print("specify status or pass 'all' as second argument to see every task on the list")
+    #dump unchanged file
     with open("to_do_list.json", "w") as f:
         json.dump(json_file_dict, f, indent=2)
 
 
 
-# arguments so far: "start", "add"
+# arguments so far: "start", "add", "update", "delete", "markinprogress", "markdone", "list"
 # COMMAND LINE ARGUMENTS FOR SINGLE USES
 #print("Arguments passed:", str(sys.argv))
 program_start = True
@@ -312,3 +333,7 @@ updated at: [last updated date and time]
 
 
 """
+
+# DONE WITH EVERY COMMAND LET'S FUCKING GO
+# now to add createdAt and updatedAt attributes
+# and then i'm doneeeee
