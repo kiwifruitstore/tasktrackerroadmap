@@ -7,46 +7,7 @@ import datetime
 
 print("hey hi welcome")
 
-# okay so first off json files, how do they work
-# worked with like coded in databases before so writing functions and stuff should be okay
-# never used a json file or separate database thing before tho so we're gonna firstly try to set this up
 
-# okay after reading i think i get it now
-# when first starting the program we want to prompt user if they have an external json file that they want to load in, otherwise create a new one
-# cli time
-
-#print("first off, do you have an external json file you would like to load? use [some command - load (file)], otherwise create a new one with [some command - start]")
-
-
-# if something something
-#with open("to_do_list.json", mode="w", encoding="utf-8") as write_file:
- #   json.dump(start_file, write_file)
-#creates a new task tracker json file (hopefully!)
-
-
-#with open("task_tracker.json", mode="r", encoding="utf-8") as read_file:
-#       task_tracker_data = json.load(read_file)
-# loads task tracker json file (if there already is one) and creates a variable "task_tracker_data" for it
-# not sure how to handle the name of the file if it isn't already "task_tracker.json"...
-
-# break time
-
-# coming back to this now and we don't need to create shit
-# just have the file there
-# lol
-
-
-# hello it's me from 2 ish months later 
-# apparently i need to create the json file if it doesn't exist
-# so before we load any of this postamble (real word?) we're gonna check if to_do_list.json exists first
-# and if it doesn't? we'll make one
-# this is what will be inside of our newly created file: 
-"""
-{
-  "tasks": []
-}
-"""
-# let's go let's go let's go
 
 start_file = {
     "tasks": []
@@ -59,16 +20,7 @@ except IOError:
     with open("to_do_list.json", mode="w", encoding="utf-8") as write_file:
         json.dump(start_file, write_file, indent=4)
     
-#create file manually if everything gets fucked
-"""
-with open("to_do_list.json", mode="w", encoding="utf-8") as write_file:
-    json.dump(start_file, write_file, indent=4)
-"""
 
-# LET'S FUCKING GOOOOOO IT WORKS
-
-
-# also using sys for command line argument
 
 # FUNCTIONS HERE
 
@@ -286,13 +238,6 @@ except IndexError:
 """
 
 
-# if you run the program with the start command or no commands at all, it starts the program
-# otherwise program start is false and does not run iterative loop
-# this is for single use cases of the program, if you just wanna change one thing then get back to work (and not have to write "exit" all the time)
-# now we add functions for all of our commands, and just run them once for single uses and again in the loop
-# one test case function "add" right now
-# at this rate i'll have to make a try except package for every single command :sob:
-
 
 # LOOP FOR STARTING AND STOPPING
 """
@@ -326,10 +271,6 @@ print("see you!")
 # works
 
 
-# now to fuck w json
-# first rung: add, edit, delete tasks
-# add command: input like [tasktracker.py add "task"]
-# task properties: id (assigned automatically), description (string passed when adding), status, createdAt, updatedAt
 
 
 # a task should look like this ideally:
@@ -342,23 +283,7 @@ print("see you!")
     "updatedAt": "[last updated date and time]",
 }
 """
-# at a point where i have to do the automatic id assigning thing
-# thought about this for a couple of days and i've decided i don't need to make the id numbers changeable because completed tasks will still stay in the database
-# so ! just gonna write a function that reads the ids given out so far and spits out the next one
-# hopefully it should output 3 after reading 1 2 4 5
-# because deleting tasks will be a feature too!
 
-# thank fuck it works
-
-# add and delete commands added and working, feel fucking good man
-
-# update command added and working, feels good to derust :)
-
-# status commands added! forgot to update lol
-
-# i've a couple hours before a party so i'll add this list function rq
-
-# how do i want all the tasks to look...
 
 """
 task ID: X
@@ -370,10 +295,4 @@ updated at: [last updated date and time]
 
 
 """
-
-# DONE WITH EVERY COMMAND LET'S FUCKING GO
-# now to add createdAt and updatedAt attributes
-# and then i'm doneeeee
-
-
-# FINAL TOUCHES CHEF
+# <3
